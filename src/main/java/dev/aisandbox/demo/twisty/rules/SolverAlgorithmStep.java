@@ -1,9 +1,9 @@
 package dev.aisandbox.demo.twisty.rules;
 
+import java.util.Optional;
+
 public interface SolverAlgorithmStep {
 
-  public boolean isValid(String state);
-
-  public String getMoves(String state) throws SolverException;
+  public Optional<String> getMoves(String state) throws SolverException;
 
 }

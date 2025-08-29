@@ -1,72 +1,46 @@
 package dev.aisandbox.demo.twisty.rules.cube333;
 
 import dev.aisandbox.demo.twisty.rules.SolverAlgorithmStep;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.smarthomethinking.homeintranet.ai.twisty.easy.SolverException;
-import org.smarthomethinking.homeintranet.ai.twisty.easy.SolverHaltException;
 
 @Slf4j
 public class WhiteCrossOrange implements SolverAlgorithmStep {
-  @Override
-  public boolean isValid(String state) {
-    // If we've already solved the white side and turned the cube over - ignore
-    if (state.matches("....Y..........RRR......GGG......OOO......BBBWWWWWWWWW")) return false;
-    // if we've already got the white cross second STEP
-    if (state.matches("...WWW.W..O........G........R....................Y....")) return false;
-    // otherwise return true
-    return true;
-  }
 
   @Override
-  public String getMoves(String state) throws SolverException {
-    log.info("Trying to move white/orange edge to top {}", state);
+  public Optional<String> getMoves(String state) {
     // find the green/white edge
-    EdgePosition p = Finder.findEdge(state, 'W', 'O');
-    log.info("Found piece in position {}", p.name());
-    switch (p) {
-        // put pieces on the top row to the bottom
-      case EDGE_TOP_RIGHT: // should never happen
-      case EDGE_RIGHT_TOP: // should never happen
-      case EDGE_TOP_FRONT: // should never happen
-      case EDGE_FRONT_TOP: // should never happen
-      case EDGE_TOP_LEFT: // should never happen
-        throw new SolverHaltException("Solver confused. Halting");
-      case EDGE_LEFT_TOP: // correct place - wrong way round
-        return "Fw' D Fw";
-      case EDGE_TOP_BACK: // in back position - move to bottom row
-      case EDGE_BACK_TOP:
-        return "B2";
-      // front rotations
-      case EDGE_RIGHT_FRONT:
-        return "U' F' U";
-      case EDGE_BOTTOM_FRONT:
-      case EDGE_FRONT_BOTTOM:
-        return "Bw D' Bw'";
-      case EDGE_LEFT_FRONT: // move to bottom
-        return "L";
-      case EDGE_FRONT_LEFT:
-        return "L'";
-      case EDGE_FRONT_RIGHT:
-        return "R' D' R";
-      case EDGE_RIGHT_BACK:
-      case EDGE_BACK_RIGHT:
-        return "B'";
-      case EDGE_BACK_LEFT:
-      case EDGE_LEFT_BACK:
-        return "B";
-      // bottom to front
-      case EDGE_BACK_BOTTOM:
-        return "Fw' D Fw";
-      case EDGE_BOTTOM_BACK:
-        return "D Fw' D2 Fw";
-      case EDGE_RIGHT_BOTTOM:
-        return "D'";
-      case EDGE_BOTTOM_RIGHT:
-      case EDGE_LEFT_BOTTOM:
-        return "D";
-      case EDGE_BOTTOM_LEFT:
-        return "Fw' D2 Fw";
-    }
-    throw new SolverHaltException("Can't find green/Orange edge cube");
+    EdgePosition p = EdgePosition.findEdgePosition(state, 'W', 'O');
+    return switch (p) {
+      // valid bottom edges
+      case EDGE_BOTTOM_BOTTOM -> Optional.of("B");
+      case EDGE_BOTTOM_TOP -> Optional.of("F");
+      // top edges
+      case EDGE_TOP_TOP -> Optional.of("U' L2");
+      case EDGE_TOP_LEFT -> Optional.of("L2");
+      case EDGE_TOP_RIGHT -> Optional.of("U2 L2");
+      case EDGE_TOP_BOTTOM -> Optional.of("U' L2");
+      // front
+      case EDGE_FRONT_TOP -> Optional.of("F' L");
+      case EDGE_FRONT_LEFT -> Optional.of("L");
+      case EDGE_FRONT_RIGHT -> Optional.of("F2 L");
+      case EDGE_FRONT_BOTTOM -> Optional.of("F' L");
+      // left
+      case EDGE_LEFT_TOP -> Optional.of("U'");
+      case EDGE_LEFT_LEFT -> Optional.of("L");
+      case EDGE_LEFT_RIGHT -> Optional.of("L'");
+      case EDGE_LEFT_BOTTOM -> Optional.of("L2");
+      // right
+      case EDGE_RIGHT_TOP -> Optional.of("U");
+      case EDGE_RIGHT_LEFT -> Optional.of("D F D'");
+      case EDGE_RIGHT_RIGHT -> Optional.of("R2");
+      // back
+      case EDGE_BACK_TOP -> Optional.of("U2");
+      case EDGE_BACK_LEFT -> Optional.of("R' U R");
+      case EDGE_BACK_RIGHT -> Optional.of("L'");
+      case EDGE_BACK_BOTTOM -> Optional.of("B'");
+
+      default -> Optional.empty(); // finished or invalid move
+    };
   }
 }

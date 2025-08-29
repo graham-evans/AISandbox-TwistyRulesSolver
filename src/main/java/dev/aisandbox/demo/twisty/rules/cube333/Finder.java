@@ -2,36 +2,6 @@ package dev.aisandbox.demo.twisty.rules.cube333;
 
 public class Finder {
 
-  public static String getRegex(EdgePosition p) {
-    switch (p) {
-      case EDGE_TOP_FRONT : return ".......x...........y..................................";
-      case EDGE_TOP_RIGHT: return ".....x......................y.........................";
-      case EDGE_TOP_BACK: return ".x...................................y................";
-      case EDGE_TOP_LEFT: return"...x......y...........................................";
-      case EDGE_FRONT_TOP: return".......y...........x..................................";
-      case EDGE_FRONT_RIGHT: return ".......................x......y.......................";
-      case EDGE_FRONT_BOTTOM: return".........................x....................y.......";
-      case EDGE_FRONT_LEFT:return"..............y......x................................";
-      case EDGE_RIGHT_TOP:return ".....y......................x.........................";
-      case EDGE_RIGHT_BACK:return "................................x......y..............";
-      case EDGE_RIGHT_BOTTOM:return "..................................x...............y...";
-      case EDGE_RIGHT_FRONT:return ".......................y......x.......................";
-      case EDGE_LEFT_TOP:return "...y......x...........................................";
-      case EDGE_LEFT_FRONT:return "..............x......y................................";
-      case EDGE_LEFT_BOTTOM:return "................x...............................y.....";
-      case EDGE_LEFT_BACK:return "............x............................y............";
-      case EDGE_BOTTOM_FRONT : return ".........................y....................x.......";
-      case EDGE_BOTTOM_RIGHT : return "..................................y...............x...";
-      case EDGE_BOTTOM_BACK : return "...........................................y........x.";
-      case EDGE_BOTTOM_LEFT : return "................y...............................x.....";
-      case EDGE_BACK_TOP : return ".y...................................x................";
-      case EDGE_BACK_LEFT : return "............y............................x............";
-      case EDGE_BACK_BOTTOM : return "...........................................x........y.";
-      case EDGE_BACK_RIGHT : return "................................y......x..............";
-    }
-    return null;
-  }
-
   public static String getRegex(CornerPosition p) {
     switch (p) {
       case CORNER_FRONT_TOP_LEFT: return "......y....z......x...................................";
@@ -67,17 +37,6 @@ public class Finder {
       case CORNER_LEFT_BACK_BOTTOM: return "...............x............................y......z..";
 
     }
-    return null;
-  }
-
-  public static EdgePosition findEdge(String state, char prime, char second) {
-    assert (state.indexOf('x') == -1);
-    assert (state.indexOf('y') == -1);
-    String target = state.replace(prime, 'x').replace(second, 'y');
-    for (EdgePosition p : EdgePosition.values()) {
-      if (target.matches(getRegex(p))) return p;
-    }
-   // log.warn("Can't find edge {}-{} from state {}", prime, second, state);
     return null;
   }
 

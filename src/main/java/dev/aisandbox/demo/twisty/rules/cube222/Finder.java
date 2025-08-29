@@ -1,5 +1,8 @@
 package dev.aisandbox.demo.twisty.rules.cube222;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Finder {
 
   public static String getRegex(CornerPosition p) {
@@ -71,7 +74,7 @@ public class Finder {
     for (CornerPosition p : CornerPosition.values()) {
       if (target.matches(getRegex(p))) return p;
     }
-  //  log.warn("Can't find corner {}-{}-{} from state {}", prime, second, third, state);
+    log.warn("Can't find corner {}-{}-{} from state {}", prime, second, third, state);
     return null;
   }
 }
