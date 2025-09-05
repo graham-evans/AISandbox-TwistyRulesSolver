@@ -11,8 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Cube333Solver implements TwistySolver {
 
-  private List<SolverAlgorithmStep> algorithmList = List.of(new Orientation(), new WhiteCrossRed(),
-      new WhiteCrossOrange());
+  private List<SolverAlgorithmStep> algorithmList = List.of(
+      new Orientation(),
+      new WhiteCrossRed(),
+      new WhiteCrossOrange(),
+      new WhiteCrossGreen(),
+      new WhiteCrossBlue()
+      );
 
   private List<String> moveQueue = new ArrayList<>();
 
@@ -34,7 +39,9 @@ public class Cube333Solver implements TwistySolver {
       }
       throw new SolverException("No solution found");
     } else {
-      return moveQueue.removeFirst();
+      String move = moveQueue.removeFirst();
+      log.info("Queue result: {}", move);
+      return move;
     }
   }
 }

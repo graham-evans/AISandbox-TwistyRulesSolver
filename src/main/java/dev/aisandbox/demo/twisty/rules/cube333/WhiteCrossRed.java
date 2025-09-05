@@ -4,12 +4,17 @@ import dev.aisandbox.demo.twisty.rules.SolverAlgorithmStep;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * First edge of the bottom level - find the white/red edge and move it to bottom right.
+ * Results in
+ * ....Y........O........B........R..R.....G........WW...
+ */
 @Slf4j
 public class WhiteCrossRed implements SolverAlgorithmStep {
 
   @Override
   public Optional<String> getMoves(String state) {
-    // find the white/ref edge
+    // find the white/red edge and move it to bottom right -
     EdgePosition p = EdgePosition.findEdgePosition(state, 'W', 'R');
     // place the white red edge piece ignoring all other pieces
     return switch (p) {

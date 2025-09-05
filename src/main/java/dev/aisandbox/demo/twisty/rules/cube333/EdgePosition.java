@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Enum to describe the position and orientation of edge pices on a 3x3x3 cube.
+ * Enum to describe the position and orientation of edge pieces on a 3x3x3 cube.
  * <p>The face is described first (TOP / LEFT / RIGHT / FRONT / BACK / BOTTOM), then the position
  * of
  * the first colour (TOP / LEFT / RIGHT / BOTTOM) these are how they appear in the flattened
@@ -34,7 +34,7 @@ public enum EdgePosition {
   EDGE_LEFT_RIGHT("..............x......y................................"),
   EDGE_LEFT_BOTTOM("................x...............................y....."),
   //primary is on right face
-   EDGE_RIGHT_TOP(".....y......................x........................."),
+  EDGE_RIGHT_TOP(".....y......................x........................."),
   EDGE_RIGHT_LEFT(".......................y......x......................."),
   EDGE_RIGHT_RIGHT("................................x......y.............."),
   EDGE_RIGHT_BOTTOM("..................................x...............y..."),
@@ -42,7 +42,7 @@ public enum EdgePosition {
   EDGE_BOTTOM_TOP(".........................y....................x......."),
   EDGE_BOTTOM_LEFT("................y...............................x....."),
   EDGE_BOTTOM_RIGHT("..................................y...............x..."),
-  EDGE_BOTTOM_BOTTOM(".y..................................................x.");
+  EDGE_BOTTOM_BOTTOM("...........................................y........x.");
 
   private final String regex;
 
